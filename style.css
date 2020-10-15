@@ -1,0 +1,45 @@
+body{
+    animation: rainbow-bg 20s linear infinite normal;
+    -webkit-animation: rainbow-bg 20s linear infinite normal;
+}
+h1{
+    animation: rainbow-title 3s ease 0s infinite forwards;
+    font-size:100px;
+    text-align:center;
+    background:linear-gradient(to right,red,orange,yellow,greenyellow,green,blue,blueviolet,violet,red) 0% center / 200% auto;
+    background-clip: text;
+    -webkit-background-clip:text;
+    color:transparent;
+}
+p{
+    color:white;
+}
+
+@keyframes rainbow-title{
+    to{background-position-x:200%}
+}
+@-webkit-keyframes rainbow-title{
+    to{background-position-x:200%}
+}
+@keyframes rainbow-bg{
+    0%{background:red}
+    12.5%{background:orange}
+    25%{background:yellow}
+    37.5%{background:greenyellow}
+    50%{background:green}
+    62.5%{background:blue}
+    75%{background:blueviolet}
+    87.5%{background:violet}
+    100%{background:red}
+}
+@-webkit-keyframes rainbow-bg{
+    0%{background:red}
+    12.5%{background:orange}
+    25%{background:yellow}
+    37.5%{background:greenyellow}
+    50%{background:green}
+    62.5%{background:blue}
+    75%{background:blueviolet}
+    87.5%{background:violet}
+    100%{background:red}
+}
