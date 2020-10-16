@@ -1,27 +1,39 @@
 body{
-    animation: rainbow-bg 20s linear infinite normal;
-    -webkit-animation: rainbow-bg 20s linear infinite normal;
+    animation: rainbow 20s linear infinite normal;
+    -webkit-animation: rainbow 20s linear infinite normal;
 }
 h1{
-    animation: rainbow-title 3s ease 0s infinite forwards;
+    animation: rainbow-title 3s linear 0s infinite forwards;
     font-size:100px;
     text-align:center;
-    background:linear-gradient(to right,red,orange,yellow,greenyellow,green,blue,blueviolet,violet,red) 0% center / 200% auto;
+    background:linear-gradient(to right,red,orange,yellow,greenyellow,green,blue,blueviolet,violet,red) 0% center / 300% auto;
     background-clip: text;
     -webkit-background-clip:text;
     color:transparent;
+
+    margin: auto;
 }
 p{
-    color:white;
+    color:black;
+    font-size: 20px;
+    margin:auto;
+    width:0auto;
+    border: 2px solid;
+    border-color: blue;
+}
+.mainbox{
+    background:linear-gradient(white,gray);
+    border: 5px solid;
+    border-color: black;
+    margin: 24px;
+    padding: 12px;
 }
 
 @keyframes rainbow-title{
-    to{background-position-x:200%}
+    to{background-position-x:300%}
 }
-@-webkit-keyframes rainbow-title{
-    to{background-position-x:200%}
-}
-@keyframes rainbow-bg{
+
+@keyframes rainbow{
     0%{background:red}
     12.5%{background:orange}
     25%{background:yellow}
@@ -32,7 +44,7 @@ p{
     87.5%{background:violet}
     100%{background:red}
 }
-@-webkit-keyframes rainbow-bg{
+@-webkit-keyframes rainbow{
     0%{background:red}
     12.5%{background:orange}
     25%{background:yellow}
