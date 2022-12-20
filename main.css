@@ -1,6 +1,5 @@
 body{
-    animation: rainbow 20s linear infinite normal;
-    -webkit-animation: rainbow 20s linear infinite normal;
+    background-color: white;
 }
 h1{
     animation: rainbow-title 3s linear 0s infinite forwards;
