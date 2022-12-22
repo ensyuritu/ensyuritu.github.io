@@ -52,8 +52,29 @@ const weapons = [
     "ボセックボウ"
 ]
 
+let rnd = (Date.now()*141350357)%(2147483648*2-1);
+let a = 7
+let b = 13
+let c = 17
+let params = (new URL(document.location)).searchParams;
+if(params.has("seed") && parseInt(params.get("seed")) != NaN) rnd = parseInt(params.get("seed"))
+if(params.has("a") && parseInt(params.get("a")) != NaN) a = parseInt(params.get("a"))
+if(params.has("b") && parseInt(params.get("b")) != NaN) b = parseInt(params.get("b"))
+if(params.has("c") && parseInt(params.get("c")) != NaN) c = parseInt(params.get("c"))
+console.log(rnd)
+console.log(a)
+console.log(b)
+console.log(c)
+
+function getRnd(){
+    rnd = (rnd << a) ^ rnd
+    rnd = (rnd >> b) ^ rnd
+    rnd = (rnd << c) ^ rnd
+    return (rnd/4294967296)+0.5
+}
+
 function randomize() {
-    legend.textContent = (legends[Math.floor(Math.random() * legends.length)])
-    weapon1.textContent = (weapons[Math.floor(Math.random() * weapons.length)])
-    weapon2.textContent = (weapons[Math.floor(Math.random() * weapons.length)])
+    legend.textContent = (legends[Math.floor(getRnd() * legends.length)])
+    weapon1.textContent = (weapons[Math.floor(getRnd() * weapons.length)])
+    weapon2.textContent = (weapons[Math.floor(getRnd() * weapons.length)])
 }
