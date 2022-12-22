@@ -52,7 +52,7 @@ const weapons = [
     "ボセックボウ"
 ]
 
-let rnd = (Date.now()*141350357)%(2147483648*2-1);
+let rnd = ((Date.now()*141350357)%4294967295)-2147483648;
 let a = 7
 let b = 13
 let c = 17
