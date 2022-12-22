@@ -13,6 +13,19 @@
             <p id="weapon1">武器1</p>
             <p id="weapon2">武器2</p>
             <button onclick="randomize()">抽選する</button>
+            <p>----------オプション----------</p>
+            <div class="subbox">
+                <p>武器重複の扱い:</p>
+                <p id="weaponDuplicationText">そのままにする</p>
+                <button class="setting" onclick="changeWeaponDuplication()">変更する</button>
+            </div>
+            <br>
+            <div class="subbox">
+                <p>シード値:</p>
+                <p class="inputfield" id="seed" contenteditable="true"></p>
+                <button class="setting" onclick="setSeed()">適用する</button>
+            </div>
+            <p id="seedMessage"></p>
         </div>
         <script type="text/javascript" src="randomizer.js"></script>
     </body>

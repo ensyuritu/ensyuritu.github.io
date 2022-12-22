@@ -17,14 +17,32 @@ h2{
 }
 p{
     color:black;
-    font-size: 20px;
-    margin:auto;
-    width:0 auto;
+    font-size: 32px;
+    margin:0;
+    width: auto;
 }
 
 button{
-    animation: rainbow 20s linear infinite normal;
-    font-size: 36px;
+    font-size: 48px;
+}
+
+.setting{
+    font-size: 32px;
+    
+}
+
+.inputfield{
+    border: 5px solid;
+    border-color: white;
+    width: auto;
+    margin: 0;
+    font-size: 32px
+}
+
+.subbox{
+    display: inline-flex;
+    margin: auto;
+    width: auto;
 }
 
 .mainbox{
