@@ -13,6 +13,7 @@
             <p id="weapon1">武器1</p>
             <p id="weapon2">武器2</p>
             <button onclick="randomize()">抽選する</button>
+            <p id="currentSeed">この構成のシード値:</p>
             <p>----------オプション----------</p>
             <div class="subbox">
                 <p>武器重複の扱い:</p>
@@ -22,7 +23,7 @@
             <br>
             <div class="subbox">
                 <p>シード値:</p>
-                <p class="inputfield" id="seed" contenteditable="true"></p>
+                <input id="seed" type="number" min="-2147483648" max="2147483647">
                 <button class="setting" onclick="setSeed()">適用する</button>
             </div>
             <p id="seedMessage"></p>

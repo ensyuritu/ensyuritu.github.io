@@ -26,6 +26,14 @@ button{
     font-size: 48px;
 }
 
+input{
+    border: solid;
+    border-color: white;
+    background: transparent;
+    border-width: 5px;
+    font-size: 36px;
+}
+
 .setting{
     font-size: 32px;
     

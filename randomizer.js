@@ -58,7 +58,12 @@ let b = 13
 let c = 17
 let weaponDuplicationAvaliable = true
 let params = (new URL(document.location)).searchParams;
-if(params.has("seed") && parseInt(params.get("seed")) != NaN) rnd = parseInt(params.get("seed"))
+if(params.has("seed") && parseInt(params.get("seed")) != NaN){
+    rnd = parseInt(params.get("seed"))
+    seedMessage.textContent = "初期シード値["+rnd+"]が適用されました。"
+}else{
+    seedMessage.textContent = "現在時刻に基づき、初期シード値["+rnd+"]が適用されました。"
+}
 if(params.has("a") && parseInt(params.get("a")) != NaN) a = parseInt(params.get("a"))
 if(params.has("b") && parseInt(params.get("b")) != NaN) b = parseInt(params.get("b"))
 if(params.has("c") && parseInt(params.get("c")) != NaN) c = parseInt(params.get("c"))
@@ -66,7 +71,8 @@ console.log(rnd)
 console.log(a)
 console.log(b)
 console.log(c)
-seed.textContent = rnd
+seed.value = rnd
+
 
 function getRnd(){
     rnd = (rnd << a) ^ rnd
@@ -76,12 +82,14 @@ function getRnd(){
 }
 
 function setSeed(){
-    const s = parseInt(seed.textContent)
+    const s = parseInt(seed.value)
     if(isNaN(s)){
-        seedMessage.textContent = "数値を半角数字で入力してください。"
-    }else if(s < -2147483648 || 2147483647 < s){
-        seedMessage.textContent = "数値が範囲外です。 -2147483648~2147483647の範囲で入力してください。"
-    }else if(s == 0){
+        seedMessage.textContent = "数値を入力してください。"
+    }
+    else if(s < -2147483648 || 2147483647 < s){
+        seedMessage.textContent = "数値が範囲外です。 -2147483648から2147483647の範囲内で入力してください。"
+    }
+    else if(s == 0){
         seedMessage.textContent = "シード値は0にできません。"
     }
     else{
@@ -100,6 +108,7 @@ function changeWeaponDuplication(){
 }
 
 function randomize() {
+    currentSeed.textContent = "この構成のシード値: "+rnd
     legend.textContent = (legends[Math.floor(getRnd() * legends.length)])
     let wp1 = ""
     let wp2 = ""
