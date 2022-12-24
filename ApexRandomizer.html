@@ -12,21 +12,59 @@
             <p id="legend">レジェンド</p>
             <p id="weapon1">武器1</p>
             <p id="weapon2">武器2</p>
-            <button onclick="randomize()">抽選する</button>
-            <p id="currentSeed">この構成のシード値:</p>
-            <p>----------オプション----------</p>
-            <div class="subbox">
-                <p>武器重複の扱い:</p>
-                <p id="weaponDuplicationText">そのままにする</p>
-                <button class="setting" onclick="changeWeaponDuplication()">変更する</button>
-            </div>
+            <button id="rouletteButton" onclick="roulette()">SPIN</button>
             <br>
-            <div class="subbox">
-                <p>シード値:</p>
-                <input id="seed" type="number" min="-2147483648" max="2147483647">
-                <button class="setting" onclick="setSeed()">適用する</button>
+            <button class="setting" onclick="randomize()">ワンクリック抽選</button>
+            
+            <p class="advanced" id="currentSeed" hidden="true">この構成のシード値:</p>
+            <p>----------オプション----------</p>
+
+            <div class="advanced">
+                <div class="subbox">
+                    <p>武器重複の扱い: </p>
+                    <p id="weaponDuplicationText">そのままにする</p>
+                    <button class="setting" onclick="changeWeaponDuplication()">変更する</button>
+                </div>
             </div>
-            <p id="seedMessage"></p>
+            
+            <div>
+                <div class="subbox">
+                    <p hidden class="advanced">上級者向け機能が有効化されました。</p>
+                    <button class="setting" onclick="setAdvanced()" id="activateAdvanced">上級者向け機能を有効にする</button>
+                </div>
+            </div>
+
+            <div class="advanced" hidden>
+                <div class="subbox advanced" >
+                    <p>ルーレットの間隔:</p>
+                    <input id="rouletteDelay" type="number" min="10" max="1000">
+                    <p>ms</p>
+                    <button class="setting" onclick="setRouletteDelay()">適用する</button>
+                </div>
+            </div>
+            <p id="rouletteDelayMessage" class="advanced" hidden></p>
+
+            <div class="advanced" hidden>
+                <div class="subbox advanced" >
+                    <p>シード値:</p>
+                    <input id="seed" type="number" min="-2147483648" max="2147483647">
+                    <button class="setting" onclick="setSeed()">適用する</button>
+                </div>
+            </div>
+            <p id="seedMessage" class="advanced" hidden></p>
+
+            <div class="advanced" hidden>
+                <div class="subbox advanced" >
+                    <p>ビットシフトの組み合わせ:</p>
+                    <input class="shiftSetting" id="shift1" type="number" min="0" max="32">
+                    <input class="shiftSetting" id="shift2" type="number" min="0" max="32">
+                    <input class="shiftSetting" id="shift3" type="number" min="0" max="32">
+                    <button class="setting" onclick="sethift()">適用する</button>
+                </div>
+            </div>
+            <p class="advanced" id="shiftMessage" hidden></p>
+
+            
         </div>
         <script type="text/javascript" src="randomizer.js"></script>
     </body>

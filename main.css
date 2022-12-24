@@ -1,5 +1,6 @@
 body{
     background-color: white;
+    font-family: system-ui
 }
 h1{
     animation: rainbow-title 3s linear 0s infinite forwards;
@@ -12,6 +13,7 @@ h1{
 
     margin: auto;
 }
+
 h2{
     text-align:center;
 }
@@ -30,21 +32,21 @@ input{
     border: solid;
     border-color: white;
     background: transparent;
+    width: auto;
     border-width: 5px;
     font-size: 36px;
 }
 
-.setting{
-    font-size: 32px;
-    
+div{
+    margin: 0;
 }
 
-.inputfield{
-    border: 5px solid;
-    border-color: white;
-    width: auto;
-    margin: 0;
-    font-size: 32px
+.setting{
+    font-size: 32px;
+}
+
+.shiftSetting{
+    width: 70px;
 }
 
 .subbox{
