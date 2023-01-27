@@ -22,6 +22,7 @@ p{
     font-size: 32px;
     margin:0;
     width: auto;
+    overflow-wrap: break-word;
 }
 
 button{
@@ -30,11 +31,30 @@ button{
 
 input{
     border: solid;
-    border-color: white;
+    border-color: dimgray;
     background: transparent;
     width: auto;
     border-width: 5px;
     font-size: 36px;
+}
+
+input:focus{
+    border-color: darkcyan;
+}
+
+textarea{
+    box-sizing: border-box;
+    border: solid;
+    border-color: dimgray;
+    background: transparent;
+    margin: 0px 0px;
+    width: 100%;
+    border-width: 5px;
+    font-size: 18px;
+    resize:none
+}
+textarea:focus{
+    border-color: darkcyan;
 }
 
 div{
@@ -47,6 +67,12 @@ div{
 
 .shiftSetting{
     width: 70px;
+}
+
+.outlinedbox{
+    border: solid;
+    border-color: dimgray;
+    border-width: 5px;
 }
 
 .subbox{

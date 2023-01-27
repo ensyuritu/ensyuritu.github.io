@@ -14,7 +14,7 @@
                 <div style="width: 50%;margin: 10px;">
                     <div class="subbox">
                         <p>処理回数の上限</p>
-                        <input id="overloadCount" type="number" min="0" max="1000000" value="1000" step="500">
+                        <input id="overloadCount" type="number" min="0" max="5000" value="1000" step="100">
                     </div>
                     <div class="subbox">
                         <button class="setting" onclick="randomize()">クイック抽選</button>
@@ -24,6 +24,8 @@
                 </div>
                 <div style="width: 50%;margin: 10px;">
                     <p>抽選結果</p>
+                    <p id="processingMessage" hidden>処理中です...</p>
+                    <p id="overloadMessage" hidden>上限に達しました。 正常な結果が表示されません。</p>
                     <div id="output" class="outlinedbox">
                     </div>
                 </div>
