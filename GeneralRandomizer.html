@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>汎用型抽選機</title>
+        <meta charset=utf-8>
+        <meta name="author", content="True_ensyuritu">
+        <meta name="description", content="いろいろできる...とおもう">
+        <link rel="stylesheet" href="./main.css">
+    </head>
+    <body>
+        <script type="text/javascript" src="generalRandomizer.js"></script>
+        <div class="mainbox center">
+            <div style="display: flex; width:100%;">
+                <div style="width: 50%;margin: 10px;">
+                    <div class="subbox">
+                        <p>処理回数の上限</p>
+                        <input id="overloadCount" type="number" min="0" max="1000000" value="1000" step="500">
+                    </div>
+                    <div class="subbox">
+                        <button class="setting" onclick="randomize()">クイック抽選</button>
+                        <button class="setting" onclick="toggleRandomize()" id="toggleRandomize">SPIN</button>
+                    </div>
+                    <textarea id="inputCommand" rows="25">[root]</textarea>
+                </div>
+                <div style="width: 50%;margin: 10px;">
+                    <p>抽選結果</p>
+                    <div id="output" class="outlinedbox">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
