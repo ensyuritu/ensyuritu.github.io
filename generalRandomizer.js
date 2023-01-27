@@ -8,6 +8,10 @@ let ids = []
 let texts = []
 let forceEnd = 1000
 let result
+let intervalMillsec = 50
+let interval;
+
+let spinning = false
 
 function readText(){
 	
@@ -81,7 +85,7 @@ function run(){
     while(output.firstChild){
         output.removeChild(output.firstChild)
     }
-    
+
 	while(commands[rootPos][i] != undefined){
         forceEnd = overloadCount.value
 		str = runCommand(commands[rootPos][i])
@@ -104,4 +108,15 @@ function prepare(){
 function randomize(){
 	prepare()
 	run()
+}
+
+function toggle(){
+    if(!spinning){
+        interval = setInterval(randomize,50)
+        toggleRandomize.textContent = "STOP"
+    }else{
+        clearInterval(interval)
+        toggleRandomize.textContent = "SPIN"
+    }
+    spinning = !spinning
 }
