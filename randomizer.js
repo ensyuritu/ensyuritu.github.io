@@ -52,6 +52,35 @@ const weapons = [
     "ロングボウDMR",
     "クレーバー",
     "ボセックボウ",
+    "ネメシスバーストAR",
+    "LスターLMG"
+]
+
+const ncpWeapons = [
+    "P2020",
+    "RE-45オート",
+    "オルタネーターSMG",
+    "G7スカウト",
+    "R99 SMG",
+    "R301カービン",
+    "スピットファイア",
+    "CAR SMG",
+    "ランページLMG",
+    "30-30リピーター",
+    "ウィングマン",
+    "プラウラー",
+    "フラットライン",
+    "ボルトSMG",
+    "ハボック",
+    "ディヴォーション",
+    "モザンビーク",
+    "マスティフ",
+    "ピースキーパー",
+    "EVA8 オート",
+    "センチネル",
+    "チャージライフル",
+    "トリプルテイク",
+    "ロングボウDMR",
     "ネメシスバーストAR"
 ]
 
@@ -183,10 +212,10 @@ function randomize() {
     if(chr == "バリスティック"){
         let bwp = ""
         if(weaponDuplicationAvaliable){
-            bwp = weapons[Math.floor(getRnd() * weapons.length)]
+            bwp = ncpWeapons[Math.floor(getRnd() * ncpWeapons.length)]
         }else{
             while(wp1 == bwp || wp2 == bwp){
-                bwp = weapons[Math.floor(getRnd() * weapons.length)]
+                bwp = ncpWeapons[Math.floor(getRnd() * ncpWeapons.length)]
             }
         }
 
