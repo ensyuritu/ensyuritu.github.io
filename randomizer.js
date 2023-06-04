@@ -164,10 +164,11 @@ function roulette(){
 
 function randomize() {
     currentSeed.textContent = "この構成のシード値: "+rnd
-    legend.textContent = (legends[Math.floor(getRnd() * legends.length)])
+    let chr = legends[Math.floor(getRnd() * legends.length)]
+    legend.textContent = (chr)
     let wp1 = ""
     let wp2 = ""
-    
+    let wp3 = ""
     if(weaponDuplicationAvaliable){
         wp1 = (weapons[Math.floor(getRnd() * weapons.length)])
         wp2 = (weapons[Math.floor(getRnd() * weapons.length)])
@@ -179,4 +180,18 @@ function randomize() {
     }
     weapon1.textContent = "\u3000"+wp1+"\u3000"
     weapon2.textContent = "\u3000"+wp2+"\u3000"
+    if(chr == "バリスティック"){
+        let bwp = ""
+        if(weaponDuplicationAvaliable){
+            bwp = weapons[Math.floor(getRnd() * weapons.length)]
+        }else{
+            while(wp1 == bwp || wp2 == bwp){
+                bwp = weapons[Math.floor(getRnd() * weapons.length)]
+            }
+        }
+
+        ballisticWeapon.textContent = "\u3000"+"スリング: "+bwp+"\u3000"
+    }else{
+        ballisticWeapon.textContent = "\u3000"+"スリング: なし"+"\u3000"
+    }
 }
