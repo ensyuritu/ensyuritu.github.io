@@ -17,7 +17,6 @@
             <br>
             <button class="setting" onclick="randomize()">ワンクリック抽選</button>
             
-            <p class="advanced" id="currentSeed" hidden="true">この構成のシード値:</p>
             <p>----------オプション----------</p>
 
             <div class="advanced">
@@ -28,44 +27,33 @@
                 </div>
             </div>
             
-            <div>
+            <div class="advanced">
                 <div class="subbox">
-                    <p hidden class="advanced">上級者向け機能が有効化されました。</p>
-                    <button class="setting" onclick="setAdvanced()" id="activateAdvanced">上級者向け機能を有効にする</button>
+                    <p>通常武器の抽選確率(23個)</p>
+                    <input type="number" id="normalWeaponWeightVal" min="0" max="99999" value=23>
                 </div>
             </div>
 
-            <div class="advanced" hidden>
-                <div class="subbox advanced" >
-                    <p>ルーレットの間隔:</p>
-                    <input id="rouletteDelay" type="number" min="10" max="1000">
-                    <p>ms</p>
-                    <button class="setting" onclick="setRouletteDelay()">適用する</button>
+            <div class="advanced">
+                <div class="subbox">
+                    <p>ケアパケ武器の抽選確率(4個)</p>
+                    <input type="number" id="legendaryWeaponWeightVal" min="0" max="99999" value=4>
                 </div>
             </div>
-            <p id="rouletteDelayMessage" class="advanced" hidden></p>
 
-            <div class="advanced" hidden>
-                <div class="subbox advanced" >
-                    <p>シード値:</p>
-                    <input id="seed" type="number" min="-2147483648" max="2147483647">
-                    <button class="setting" onclick="setSeed()">適用する</button>
+            <div class="advanced">
+                <div class="subbox">
+                    <p>クラフト武器の抽選確率(2個)</p>
+                    <input type="number" id="craftWeaponWeightVal" min="0" max="99999" value=2>
                 </div>
             </div>
-            <p id="seedMessage" class="advanced" hidden></p>
 
-            <div class="advanced" hidden>
-                <div class="subbox advanced" >
-                    <p>ビットシフトの組み合わせ:</p>
-                    <input class="shiftSetting" id="shift1" type="number" min="0" max="32">
-                    <input class="shiftSetting" id="shift2" type="number" min="0" max="32">
-                    <input class="shiftSetting" id="shift3" type="number" min="0" max="32">
-                    <button class="setting" onclick="sethift()">適用する</button>
+            <div class="advanced">
+                <div class="subbox">
+                    <p>任意枠の抽選確率</p>
+                    <input type="number" id="wildWeaponWeightVal" min="0" max="99999" value=0>
                 </div>
             </div>
-            <p class="advanced" id="shiftMessage" hidden></p>
-
-            
         </div>
         <script type="text/javascript" src="randomizer.js"></script>
     </body>

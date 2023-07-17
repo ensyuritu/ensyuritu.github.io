@@ -22,117 +22,69 @@ const legends = [
     "ニューキャッスル",
     "ヴァンテージ",
     "カタリスト",
-    "バリスティック"]
+    "バリスティック"
+]
 
-const weapons = [
-    "P2020",
-    "RE-45オート",
-    "オルタネーターSMG",
-    "G7スカウト",
-    "R99 SMG",
-    "R301カービン",
-    "スピットファイア",
-    "CAR SMG",
-    "ランページLMG",
+const normalWeapons = [
     "30-30リピーター",
+    "CAR",
+    "EVA-8オート",
+    "G7スカウト",
+    "Lスター",
+    "P2020",
+    "R-301カービン",
     "ウィングマン",
-    "プラウラー",
-    "ヘムロック",
-    "フラットライン",
-    "ボルトSMG",
-    "ハボック",
-    "ディヴォーション",
-    "モザンビーク",
-    "マスティフ",
-    "ピースキーパー",
-    "EVA8 オート",
+    "オルタネーター",
+    "スピットファイア",
     "センチネル",
     "チャージライフル",
+    "ディヴォーション",
     "トリプルテイク",
-    "ロングボウDMR",
+    "ネメシス",
+    "ハボック",
+    "ピースキーパー",
+    "フラットライン",
+    "プラウラー",
+    "ボルト",
+    "マスティフ",
+    "モザンビーク",
+    "ロングボウ"
+]
+
+const legendaryWeapons = [
+    "RE-45",
     "クレーバー",
-    "ボセックボウ",
-    "ネメシスバーストAR",
-    "LスターLMG"
+    "ヘムロック",
+    "ボセック"
 ]
 
-const ncpWeapons = [
-    "P2020",
-    "RE-45オート",
-    "オルタネーターSMG",
-    "G7スカウト",
-    "R99 SMG",
-    "R301カービン",
-    "スピットファイア",
-    "CAR SMG",
-    "ランページLMG",
-    "30-30リピーター",
-    "ウィングマン",
-    "プラウラー",
-    "フラットライン",
-    "ボルトSMG",
-    "ハボック",
-    "ディヴォーション",
-    "モザンビーク",
-    "マスティフ",
-    "ピースキーパー",
-    "EVA8 オート",
-    "センチネル",
-    "チャージライフル",
-    "トリプルテイク",
-    "ロングボウDMR",
-    "ネメシスバーストAR"
+const craftWeapons = [
+    "R-99",
+    "ランページ"
 ]
 
-let rnd = ((Date.now()*141350357)%4294967295)-2147483648;
-let a = 13
-let b = 17
-let c = 5
+const wildWeapons = [
+    "任意のライトアモ武器",
+    "任意のヘビーアモ武器",
+    "任意のエネルギーアモ武器",
+    "任意のスナイパーアモ武器",
+    "任意のショットガンアモ武器",
+    "任意のアロー武器"
+]
+
+
+
 let weaponDuplicationAvaliable = true
 let params = (new URL(document.location)).searchParams;
 let intervalDelay = 33
 let spinning = false
 let spinInterval = 0
 
-seedMessage.textContent = "現在時刻に基づき、初期シード値["+rnd+"]が適用されています。"
-if(params.has("a") && parseInt(params.get("a")) != NaN) a = parseInt(params.get("a"))
-if(params.has("b") && parseInt(params.get("b")) != NaN) b = parseInt(params.get("b"))
-if(params.has("c") && parseInt(params.get("c")) != NaN) c = parseInt(params.get("c"))
-console.log(rnd)
-console.log(a)
-console.log(b)
-console.log(c)
-seed.value = rnd
-shift1.value = a
-shift2.value = b
-shift3.value = c
-rouletteDelay.value = intervalDelay
-shiftMessage.textContent = "現在のビットシフトの組み合わせは["+a+"] ["+b+"] ["+c+"] です。"
+let weightNormalWeapon = 21
+let weightLegendaryWeapon = 4
+let weightCraftWeapon = 2
+let weightWildWeapon = 0
 
-
-function getRnd(){
-    rnd = (rnd << a) ^ rnd
-    rnd = (rnd >> b) ^ rnd
-    rnd = (rnd << c) ^ rnd
-    return (rnd/4294967296)+0.5
-}
-
-function setSeed(){
-    const s = parseInt(seed.value)
-    if(isNaN(s)){
-        seedMessage.textContent = "数値を入力してください。"
-    }
-    else if(s < -2147483648 || 2147483647 < s){
-        seedMessage.textContent = "数値が範囲外です。 -2147483648から2147483647の範囲内で入力してください。"
-    }
-    else if(s == 0){
-        seedMessage.textContent = "シード値は0にできません。"
-    }
-    else{
-        seedMessage.textContent = "シード値["+s+"]が適用されました。小数は反映されません。"
-        rnd = s
-    }
-}
 
 function changeWeaponDuplication(){
     weaponDuplicationAvaliable = !weaponDuplicationAvaliable
@@ -143,43 +95,14 @@ function changeWeaponDuplication(){
     }
 }
 
-function sethift(){
-    const ta = shift1.value
-    const tb = shift2.value
-    const tc = shift3.value
-    if(isNaN(parseInt(shift1.value) + parseInt(shift2.value) + parseInt(shift3.value))){
-        shiftMessage.textContent = "数値を入力してください。"
-        return
-    }else if(ta == tb || tb == tc || tc == ta){
-        shiftMessage.textContent = "同じ値がある場合適用できません。"
-        return
-    }
-    a = ta
-    b = tb
-    c = tc
-    shiftMessage.textContent = "ビットシフト["+a+"] ["+b+"] ["+c+"]が適用されました。"
-}
-
-function setAdvanced(){
-    let elements = document.getElementsByClassName("advanced")
-    activateAdvanced.hidden = "true"
-    for(element of elements){
-        element.hidden = false
-    }
-}
-
-function setRouletteDelay(){
-    const s = parseInt(rouletteDelay.value)
-    if(isNaN(s)){
-        rouletteDelayMessage.textContent = "数値を入力してください。"
-    }else{
-        rouletteDelayMessage.textContent = "抽選間隔["+s+"]msが適用されました。"
-        intervalDelay = s
-    }
-}
-
 function roulette(){
-    console.log(spinning)
+    
+
+    weightNormalWeapon = normalWeaponWeightVal.value - 0
+    weightLegendaryWeapon = legendaryWeaponWeightVal.value - 0
+    weightCraftWeapon = craftWeaponWeightVal.value - 0
+    weightWildWeapon = wildWeaponWeightVal.value - 0
+
     if(!spinning){
         spinInterval = setInterval(randomize, intervalDelay)
         rouletteButton.textContent = "STOP"
@@ -192,35 +115,57 @@ function roulette(){
 }
 
 function randomize() {
-    currentSeed.textContent = "この構成のシード値: "+rnd
-    let chr = legends[Math.floor(getRnd() * legends.length)]
+    //キャラクターの抽選
+    let chr = legends[Math.floor(Math.random() * legends.length)]
     legend.textContent = (chr)
     let wp1 = ""
     let wp2 = ""
-    let wp3 = ""
+    //武器の抽選
     if(weaponDuplicationAvaliable){
-        wp1 = (weapons[Math.floor(getRnd() * weapons.length)])
-        wp2 = (weapons[Math.floor(getRnd() * weapons.length)])
+        wp1 = chooseWeapon()
+        wp2 = chooseWeapon()
     }else{
         while(wp1 == wp2){
-            wp1 = (weapons[Math.floor(getRnd() * weapons.length)])
-            wp2 = (weapons[Math.floor(getRnd() * weapons.length)])
+            wp1 = chooseWeapon()
+            wp2 = chooseWeapon()
         }
     }
     weapon1.textContent = "\u3000"+wp1+"\u3000"
     weapon2.textContent = "\u3000"+wp2+"\u3000"
     if(chr == "バリスティック"){
         let bwp = ""
+        let tmpWeightLegendaryWeapon = weightLegendaryWeapon
+        weghtLegendaryWeapon = 0
         if(weaponDuplicationAvaliable){
-            bwp = ncpWeapons[Math.floor(getRnd() * ncpWeapons.length)]
+            
+            bwp = chooseWeapon()
         }else{
             while(wp1 == bwp || wp2 == bwp){
-                bwp = ncpWeapons[Math.floor(getRnd() * ncpWeapons.length)]
+                bwp = chooseWeapon()
             }
         }
-
+        weightLegendaryWeapon = tmpWeightLegendaryWeapon
         ballisticWeapon.textContent = "\u3000"+"スリング: "+bwp+"\u3000"
     }else{
         ballisticWeapon.textContent = "\u3000"+"スリング: なし"+"\u3000"
     }
+}
+
+function chooseWeapon(){//武器選択
+    let rnd = Math.random()
+    let total = weightNormalWeapon + weightLegendaryWeapon + weightCraftWeapon + weightWildWeapon
+    rnd = rnd * total
+    
+    wp = ""
+    if(rnd < weightNormalWeapon){
+        wp = normalWeapons[Math.floor(Math.random() * normalWeapons.length)]
+    }else if(rnd < weightNormalWeapon + weightLegendaryWeapon){
+        wp = legendaryWeapons[Math.floor(Math.random() * legendaryWeapons.length)]
+    }else if(rnd < weightNormalWeapon + weightLegendaryWeapon + weightCraftWeapon){
+        wp = craftWeapons[Math.floor(Math.random() * craftWeapons.length)]
+    }else if((rnd < weightNormalWeapon + weightLegendaryWeapon + weightCraftWeapon + weightWildWeapon)){
+        wp = wildWeapons[Math.floor(Math.random() * wildWeapons.length)]
+    }
+
+    return wp
 }
