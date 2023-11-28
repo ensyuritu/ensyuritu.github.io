@@ -92,6 +92,9 @@ let weightCraftWeapon = craftWeapons.length
 console.log(weightCraftWeapon)
 let weightWildWeapon = 0
 
+let wp1 = ""
+let wp2 = ""
+
 
 function changeWeaponDuplication(){
     weaponDuplicationAvaliable = !weaponDuplicationAvaliable
@@ -162,8 +165,7 @@ function randomize() {
     //キャラクターの抽選
     let chr = legends[Math.floor(Math.random() * legends.length)]
     legend.textContent = (chr)
-    let wp1 = ""
-    let wp2 = ""
+
     //武器の抽選
     if(weaponDuplicationAvaliable){
         wp1 = chooseWeapon()
