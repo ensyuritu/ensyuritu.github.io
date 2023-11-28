@@ -22,7 +22,8 @@ const legends = [
     "ニューキャッスル",
     "ヴァンテージ",
     "カタリスト",
-    "バリスティック"
+    "バリスティック",
+    "コンジット"
 ]
 
 const normalWeapons = [
@@ -48,7 +49,9 @@ const normalWeapons = [
     "ボルト",
     "マスティフ",
     "モザンビーク",
-    "ロングボウ"
+    "ロングボウ",
+    "R-99",
+    "ランページ"
 ]
 
 const legendaryWeapons = [
@@ -59,8 +62,7 @@ const legendaryWeapons = [
 ]
 
 const craftWeapons = [
-    "R-99",
-    "ランページ"
+//一時的に未使用
 ]
 
 const wildWeapons = [
@@ -80,9 +82,9 @@ let intervalDelay = 33
 let spinning = false
 let spinInterval = 0
 
-let weightNormalWeapon = 21
-let weightLegendaryWeapon = 4
-let weightCraftWeapon = 2
+let weightNormalWeapon = normalWeapons.length
+let weightLegendaryWeapon = legendaryWeapons.length
+let weightCraftWeapon = craftWeapons.length
 let weightWildWeapon = 0
 
 
