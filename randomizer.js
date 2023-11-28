@@ -80,7 +80,9 @@ let weaponDuplicationAvaliable = true
 let params = (new URL(document.location)).searchParams;
 let intervalDelay = 33
 let spinning = false
+let spinningLegend = false
 let spinInterval = 0
+let spinIntervalLegend = 0
 
 let weightNormalWeapon = normalWeapons.length
 console.log(weightNormalWeapon)
@@ -116,6 +118,43 @@ function roulette(){
         clearInterval(spinInterval)
         rouletteButton.textContent = "SPIN"
         spinning = false
+    }
+}
+
+function rouletteLegend(){
+
+    if(!spinning){
+        spinInterval = setInterval(randomizeLegend, intervalDelay)
+        rouletteButton.textContent = "STOP"
+        spinning = true
+    }else{
+        clearInterval(spinInterval)
+        rouletteButton.textContent = "SPIN"
+        spinning = false
+    }
+
+}
+
+function randomizeLegend(){
+    let chr = legends[Math.floor(Math.random() * legends.length)]
+    legend.textContent = (chr)
+
+    if(chr == "バリスティック"){
+        let bwp = ""
+        let tmpWeightLegendaryWeapon = weightLegendaryWeapon
+        weghtLegendaryWeapon = 0
+        if(weaponDuplicationAvaliable){
+            
+            bwp = chooseWeapon()
+        }else{
+            while(wp1 == bwp || wp2 == bwp){
+                bwp = chooseWeapon()
+            }
+        }
+        weightLegendaryWeapon = tmpWeightLegendaryWeapon
+        ballisticWeapon.textContent = "\u3000"+"スリング: "+bwp+"\u3000"
+    }else{
+        ballisticWeapon.textContent = "\u3000"+"スリング: なし"+"\u3000"
     }
 }
 
