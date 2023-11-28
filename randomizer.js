@@ -34,7 +34,6 @@ const normalWeapons = [
     "Lスター",
     "P2020",
     "R-301カービン",
-    "ウィングマン",
     "オルタネーター",
     "スピットファイア",
     "センチネル",
@@ -51,13 +50,14 @@ const normalWeapons = [
     "モザンビーク",
     "ロングボウ",
     "R-99",
+    "ヘムロック",
     "ランページ"
 ]
 
 const legendaryWeapons = [
     "RE-45",
     "クレーバー",
-    "ヘムロック",
+    "ウィングマン",
     "ボセック"
 ]
 
@@ -83,8 +83,11 @@ let spinning = false
 let spinInterval = 0
 
 let weightNormalWeapon = normalWeapons.length
+console.log(weightNormalWeapon)
 let weightLegendaryWeapon = legendaryWeapons.length
+console.log(weightLegendaryWeapon)
 let weightCraftWeapon = craftWeapons.length
+console.log(weightCraftWeapon)
 let weightWildWeapon = 0
 
 
