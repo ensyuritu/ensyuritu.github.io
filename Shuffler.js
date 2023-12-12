@@ -33,7 +33,6 @@ function run(){
         let selected = entryList.splice(listIndex,1)
         randomizedList.push(selected[0])
     }
-    console.log(randomizedList)
     
     if(memberCount.value == 1){
         randomizedList.forEach((e) => {
@@ -61,12 +60,15 @@ function run(){
             let doc = document.createElement("p")
             teamCounter++
             for(let i=0; i<memberCount.value; i++){
-                memberList += randomizedList[listCounter] + " "
+                memberList += randomizedList[listCounter] + " , "
                 listCounter++
                 if(listCounter >= randomizedList.length){
                     break
                 }
             }
+            console.log(memberList)
+            memberList = memberList.slice(0,-3)
+            console.log(memberList)
             doc.innerText = "-- Group " + teamCounter + " --\n" + memberList
             output.appendChild(doc)
         }
