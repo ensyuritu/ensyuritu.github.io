@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>チーム分け抽選機</title>
+        <meta charset=utf-8>
+        <meta name="author", content="True_ensyuritu">
+        <meta name="description", content="いろいろできる...とおもう">
+        <link rel="stylesheet" href="./main.css">
+    </head>
+    <body>
+        <script type="text/javascript" src="Shuffler.js"></script>
+        <div class="mainbox center">
+            <div style="display: flex; width:100%;">
+                <div style="width: 50%;margin: 10px;">
+                    <div class="subbox">
+                    </div>
+                    <div class="subbox">
+                        <button class="setting" onclick="randomize()">クイック抽選</button>
+                        <button class="setting" onclick="toggle()" id="toggleRandomize">SPIN</button>
+                    </div>
+                    <textarea id="inputCommand" rows="25" placeholder="一つずつ改行で区切って入力 空の行は無視されます"></textarea>
+                    <div class="subbox">
+                        <input  class="setting" type="number" id="memberCount" min="1" max="20" value=2>
+                        <p class="setting">個つずつ区切る</p>
+                    </div>
+
+                </div>
+                <div style="width: 50%;margin: 10px;">
+                    <p>抽選結果</p>
+                    <p id="processingMessage" hidden>処理中です...</p>
+                    <p id="overloadMessage" hidden>上限に達しました。 正常な結果が表示されません。</p>
+                    <div id="output" class="outlinedbox">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
