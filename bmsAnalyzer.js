@@ -44,7 +44,7 @@ function changeFile(){
     let result
     
     const reader = new FileReader()
-    reader.readAsText(BMS_FILE)
+    reader.readAsText(BMS_FILE, "Shift-JIS")
 
     reader.onload = () => {
         result = reader.result
@@ -58,9 +58,23 @@ function changeFile(){
 }
 
 function loadbms(text){
-    
-
     defines = text.split("\n")
+    //基礎情報読み取り
+    diffOutput.innerText = ""
+
+    const titleDefs = filterString(defines, "#TITLE ")
+    const titleStr = titleDefs[titleDefs.length - 1].slice(7)
+    const subtitleDefs = filterString(defines, "#SUBTITLE ")
+    let  subtitleStr = ""
+    if(subtitleDefs.length != 0) subtitleDefs[subtitleDefs.length - 1].slice(10)
+    const artistDefs = filterString(defines, "#ARTIST ")
+    const artistStr = artistDefs[artistDefs.length - 1].slice(8)
+    const genreDefs = filterString(defines, "#GENRE ")
+    let genreStr = ""
+    if(genreDefs.length != 0) genreStr = genreDefs[genreDefs.length - 1].slice(7)
+
+    diffOutput.innerText += "Artist:" + artistStr + " " + titleStr + subtitleStr + "\nGenre:" + genreStr +"\n"
+    
     //小節の長さ書き出し
     
     setTimeout(loadMeasureLengths,0)
@@ -68,6 +82,7 @@ function loadbms(text){
 
 
     //BPM定義読み取り
+
     bpmString = filterString(defines, "#BPM ")[0].slice(5)
     bpm = bpmString - 0
     console.log("bpm = "+bpm)
@@ -482,7 +497,7 @@ function outputDiff_SP7K(){
         key_diff += difficultys[i+1]
     }
     key_diff = key_diff / 7
-    diffOutput.innerText = ""
+    
     diffOutput.innerText += "難易度\n"
     diffOutput.innerText += key_diff.toFixed(3)+" + SC"+sc_diff.toFixed(3)
 }
