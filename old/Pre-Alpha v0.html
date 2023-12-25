@@ -5,20 +5,18 @@
         <meta charset=utf-8>
         <meta name="author", content="True_ensyuritu">
         <meta name="description", content="BMSの難易度を推定するやつ">
-        <link rel="stylesheet" href="./main.css">
+        <link rel="stylesheet" href="/main.css">
     </head>
     <body>
         <div class="mainbox center">
-            <p>True定数 Pre-Alpha v0.2</p>
+            <p>True定数 Pre-Alpha</p>
             <p>BMSON非対応、現状SP7K限定です</p>
-            <p>まだ仮ですがLN入りの難易度計算に対応しました。 (MGQ記法のLNの場合計算できません)</p>
-            <p>LNの計算方式</p>
-            <button id="LNCalculateMethod" class="setting" onclick="changeLNCalculateMethod()">計算しない</button>
+            <p>また、LNは完全に無視して難易度が計算されます。(いずれ対応する予定だけどLN定義多すぎて死にそう)</p>
             
             <p id="diffOutput"></p>
             <input type="file" id="bms_file" onchange="changeFile()"/>
             <p id="processStatus"></p>
         </div>
-        <script type="text/javascript" src="bmsAnalyzer.js"></script>
+        <script type="text/javascript" src="Pre-Alpha v0.js"></script>
     </body>
 </html>

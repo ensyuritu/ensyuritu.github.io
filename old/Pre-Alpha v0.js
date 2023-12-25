@@ -1,10 +1,6 @@
 const SP7K_CHANNELS = ["16","11","12","13","14","15","18","19"]
 //                      SC   01   02   03   04   05   06   07
-const SP7K_LNCHANNELS = ["56","51","52","53","54","55","58","59"]//5Nチャンネルがそのまま対応すると仮定
-//
 //DP7KかPMS9Kは需要があり次第
-let LNCalcMethod = 0
-const LNCalcMethodTexts = ["計算しない","LNの始点と終点を通常ノーツとして計算"]
 
 
 let defines=[]//BMSのコマンドを全部入れるやつ
@@ -15,7 +11,6 @@ let duration = 0//曲の長さ(ミリ秒)
 
 let notesDefines=[]//ノーツ定義まとめ
 let notes=[]//ノーツの位置をms単位でまとめたもの
-let notesLN=[]//LNの始点と終点をまとめたもの
 
 let measureLengths=[]//小節の長さ 1小節=1.0 
 let bpms=[]//0:小節数 1:小節内での位置 2:変更するBPM
@@ -31,15 +26,13 @@ let bpmChangeDefines = []//BPM変化をlegacyのものとまとめたもの
 
 let timings = []//それぞれの小節で何msなのかを置いておく 未定義区間は線形補完で大丈夫
 
-let calculateRange = 0
-let calculateAccuracy = 20
+let loglevel = 0
 
 //legacyBpmDefined || extendBpmDefined
 let legacyBpmDefined = false
 let extendBpmDefined = false
 
 let difficultys = []
-let difficultyWeights = []
 
 function changeFile(){
     
@@ -119,8 +112,6 @@ function loadbms(text){
     //notesDefines = [] //使わない説浮上
     //defineNotesTimings_SP7K()
     setTimeout(defineNotesTimings_SP7K,0)
-    //LN書き出し
-    setTimeout(defineLNTimings_SP7K,0)
 
     //難易度推定
     setTimeout(estimateDiff_SP7K,0)
@@ -220,13 +211,10 @@ function timing(measure, scale, index){
     return milsec
 }
 
-function scrapeArray(array, lowest, highest, includeEqual){
+function scrapeArray(array, lowest, highest){
     let arr = []
     for(let i=0; i<array.length; i++){
-        if(lowest <= array[i] && array[i] <= highest && includeEqual){
-            arr.push(array[i])
-        }
-        else if(lowest < array[i] && array[i] < highest){
+        if(lowest < array[i] && array[i] < highest){
             arr.push(array[i])
         }
     }
@@ -459,46 +447,6 @@ function defineNotesTimings_SP7K(){
         }
         notes[i].sort((a, b) => a - b)
     }
-    processStatus.innerText += "LNノーツの読み取り\n"
-}
-
-function defineLNTimings_SP7K(){
-    notesLN=[]
-
-    for(let i=0; i<8; i++){//i 鍵盤
-        const ChannelSuffix = SP7K_LNCHANNELS[i]
-        notesLN[i] = []
-        for(let j=0; j<1000; j++){//j 小節
-            const notesRawData = filterString(defines, "#"+zeroPadding(j,3)+ChannelSuffix+":")
-            
-            if(notesRawData.length >= 1) console.log("#"+zeroPadding(j,3)+ChannelSuffix+"の定義数:"+notesRawData.length)
-
-            for(let k=0; k<notesRawData.length; k++){//k 多重定義の読み取り
-                const data = readData(notesRawData[k].slice(7))
-
-                for(let l=0; l<data.length; l++){//l ノーツの読み取り
-                    
-                    if(data[l] != "00"){//そこにノーツがあったとき
-                        notesCount += 1
-                        const thisTiming = timing(j, data.length, l)
-                        notesLN[i].push(thisTiming)
-
-                        if(thisTiming > duration) duration = thisTiming
-
-                    }
-                }
-            }
-        }
-        notesLN[i].sort((a, b) => a - b)
-        if(LNCalcMethod == 1){
-            notes[i] = notes[i].concat(notesLN[i])
-            notes[i].sort((a, b) => a - b)
-        }
-        
-    }
-
-    
-
     processStatus.innerText += "難易度推定計算(1/?)\n"
 }
 
@@ -507,50 +455,34 @@ function estimateDiff_SP7K(){
         setTimeout(calculateDiff_SP7K,0,i)
     }
     setTimeout(outputDiff_SP7K,0)
-    calculateRange = (duration / notesCount) * calculateAccuracy
     console.log("総ノーツ数: "+notesCount)
     console.log("曲の長さ: "+duration)
-    console.log("計算範囲:"+ calculateRange)
 }
 
 function calculateDiff_SP7K(lane){
     let diff = 0
-
-    let diff_Power = 0//物量難度
-    let diff_Complex = 0//鍵盤難度
-
-
-
+    
+    let notesCounter = 0
     let calculateCounter = 0
     for(let i=0; i<notes[lane].length; i++){
         for(let j=0; j<8; j++){
-            const sameLane = lane == j
-            calculateRange = (duration / notesCount) * 20
-            const afterNotes = scrapeArray(notes[j], notes[lane][i], notes[lane][i] + calculateRange, !sameLane)
-            
+            const afterNotes = scrapeArray(notes[j], notes[lane][i], notes[lane][i] + (duration / notesCount) * 10)
 
 
             for(let k=0; k<afterNotes.length; k++){
-                if(sameLane){
-                    diff_Power += 1 / (duration / notesCount)
-                }
-                else{
-                    diff_Complex += (afterNotes[k] - notes[lane][i]) / (duration / notesCount)
-                    diff_Power += 0.2 / (duration / notesCount)
-                }
-
+                diff += 1 / (afterNotes[k] - notes[lane][i])
                 calculateCounter += 1
             }
             
         }
+        
+        notesCounter += 1
     }
-    diff_Complex = diff_Complex / notes[lane].length
-    diff_Power = diff_Power / notes[lane].length
-    diff = diff_Complex * diff_Power
-    
-    console.log("鍵盤#"+lane+"難易度:"+diff+"物量難易度:"+diff_Power + " 鍵盤難易度:"+diff_Complex)
+    diff = diff / notesCounter
+    diff = diff * 440
+
+    console.log("鍵盤#"+lane+" ノーツ数:"+notesCounter+" 計算回数:"+calculateCounter+" 難易度:"+diff)
     difficultys[lane] = diff
-    difficultyWeights[lane] = calculateCounter
     if(lane == 7){
         processStatus.innerText += "難易度推定終了\n"
     }else{
@@ -568,11 +500,4 @@ function outputDiff_SP7K(){
     
     diffOutput.innerText += "難易度\n"
     diffOutput.innerText += key_diff.toFixed(3)+" + SC"+sc_diff.toFixed(3)
-}
-
-//以下ボタンイベント
-function changeLNCalculateMethod(){
-    LNCalcMethod += 1
-    if(LNCalcMethodTexts.length <= LNCalcMethod) LNCalcMethod = 0
-    LNCalculateMethod.textContent = LNCalcMethodTexts[LNCalcMethod]
 }
