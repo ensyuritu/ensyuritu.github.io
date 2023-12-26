@@ -464,7 +464,7 @@ function defineNotesTimings_SP7K(){
 
 function defineLNTimings_SP7K(){
     notesLN=[]
-
+    let LNCount = 0
     for(let i=0; i<8; i++){//i 鍵盤
         const ChannelSuffix = SP7K_LNCHANNELS[i]
         notesLN[i] = []
@@ -479,7 +479,7 @@ function defineLNTimings_SP7K(){
                 for(let l=0; l<data.length; l++){//l ノーツの読み取り
                     
                     if(data[l] != "00"){//そこにノーツがあったとき
-                        notesCount += 1
+                        LNCount += 1
                         const thisTiming = timing(j, data.length, l)
                         notesLN[i].push(thisTiming)
 
@@ -493,6 +493,7 @@ function defineLNTimings_SP7K(){
         if(LNCalcMethod == 1){
             notes[i] = notes[i].concat(notesLN[i])
             notes[i].sort((a, b) => a - b)
+            notesCount += LNCount
         }
         
     }
@@ -510,7 +511,8 @@ function estimateDiff_SP7K(){
     calculateRange = (duration / notesCount) * calculateAccuracy
     console.log("総ノーツ数: "+notesCount)
     console.log("曲の長さ: "+duration)
-    console.log("計算範囲:"+ calculateRange)
+    console.log("NPS:"+(notesCount/duration)*1000)
+    //console.log("計算範囲:"+ calculateRange)
 }
 
 function calculateDiff_SP7K(lane){
@@ -519,24 +521,29 @@ function calculateDiff_SP7K(lane){
     let diff_Power = 0//物量難度
     let diff_Complex = 0//鍵盤難度
 
-
+    //const nps = (notesCount/duration)*1000
 
     let calculateCounter = 0
     for(let i=0; i<notes[lane].length; i++){
         for(let j=0; j<8; j++){
             const sameLane = lane == j
             calculateRange = (duration / notesCount) * 20
-            const afterNotes = scrapeArray(notes[j], notes[lane][i], notes[lane][i] + calculateRange, !sameLane)
-            
+            let afterNotes = []
+            if(!sameLane){
+                afterNotes = scrapeArray(notes[j], notes[lane][i], Infinity, false)
+            }else{
+                afterNotes = scrapeArray(notes[j], notes[lane][i], Infinity, false)
+            }
 
 
             for(let k=0; k<afterNotes.length; k++){
                 if(sameLane){
-                    diff_Power += 1 / (duration / notesCount)
+                    //diff_Power += 1 / (duration / notesCount)
+                    diff_Complex += 0.125**((afterNotes[k] - notes[lane][i])/1000)
+                    diff_Power += 0.35**((afterNotes[k] - notes[lane][i])/1000)
                 }
                 else{
-                    diff_Complex += (afterNotes[k] - notes[lane][i]) / (duration / notesCount)
-                    diff_Power += 0.2 / (duration / notesCount)
+                    diff_Complex += 0.125**((afterNotes[k] - notes[lane][i])/1000)
                 }
 
                 calculateCounter += 1
@@ -561,10 +568,12 @@ function calculateDiff_SP7K(lane){
 function outputDiff_SP7K(){
     const sc_diff = difficultys[0]
     let key_diff = 0
+    let weightTotal = 0
     for(let i=0; i<7; i++){
-        key_diff += difficultys[i+1]
+        key_diff += difficultys[i+1] * difficultyWeights[i+1]
+        weightTotal += difficultyWeights[i+1]
     }
-    key_diff = key_diff / 7
+    key_diff = key_diff / weightTotal
     
     diffOutput.innerText += "難易度\n"
     diffOutput.innerText += key_diff.toFixed(3)+" + SC"+sc_diff.toFixed(3)
